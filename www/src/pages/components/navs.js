@@ -5,6 +5,7 @@ import LinkToSource from '../../components/LinkToSource';
 import PropTable from '../../components/PropTable';
 import ReactPlayground from '../../components/ReactPlayground';
 import Callout from '../../components/Callout';
+import CodeBlock from '../../components/CodeBlock';
 
 import NavAlignement from '../../examples/Nav/Alignment';
 import NavBasic from '../../examples/Nav/Basic';
@@ -12,6 +13,7 @@ import NavDropdown from '../../examples/Nav/Dropdown';
 import NavStacked from '../../examples/Nav/Stacked';
 import NavFill from '../../examples/Nav/Fill';
 import NavJustified from '../../examples/Nav/Justified';
+import NavDropdownImpl from '../../examples/Nav/DropdownImpl';
 
 export default function NavSection({ data }) {
   return (
@@ -72,10 +74,19 @@ export default function NavSection({ data }) {
       <ReactPlayground codeText={NavJustified} />
 
       <h3>
-        <Anchor id="navs-dropdown">Dropdown</Anchor>
+        <Anchor id="navs-dropdown">Using dropdowns</Anchor>
       </h3>
       <p>
-        Add dropdowns using the <code>NavDropdown</code> component.
+        You can mix and match the Dropdown components with the NavLink and
+        NavItem components to create a Dropdown that plays well in a Nav
+        component
+      </p>
+      <CodeBlock codeText={NavDropdownImpl} />
+
+      <p>
+        The above demostrates how flexible the component model can be. But if
+        you didn't want to roll your own versions we've included a
+        straight-forward <code>NavDropdown</code> that works for most cases.{' '}
       </p>
       <ReactPlayground codeText={NavDropdown} />
 
@@ -114,6 +125,10 @@ export const query = graphql`
       ...PropTable_metadata
     }
     NavLink: componentMetadata(displayName: { eq: "NavLink" }) {
+      displayName
+      ...PropTable_metadata
+    }
+    NavDropdown: componentMetadata(displayName: { eq: "NavDropdown" }) {
       displayName
       ...PropTable_metadata
     }

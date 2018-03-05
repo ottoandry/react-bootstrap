@@ -1,10 +1,21 @@
-
-
 .anchor + small {
   display: block;
 }
 
-.badge + .badge,
-.btn-toolbar > .btn + .btn {
-  margin-left: .5em;
+.bs-example {
+  .btn-toolbar + .btn-toolbar {
+    margin-top: 10px;
+  }
+
+  .badge + .badge,
+  .btn-toolbar > * + * {
+    margin-left: 0.5em;
+  }
+}
+
+.bs-example__dropdown-menu {
+  .dropdown-menu {
+    position: static;
+    display: block;
+  }
 }

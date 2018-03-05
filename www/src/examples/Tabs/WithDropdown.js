@@ -1,7 +1,7 @@
 <Tab.Container id="tabs-with-dropdown" defaultActiveKey="first">
   <Row className="clearfix">
     <Col sm={12}>
-      <Nav bsStyle="tabs">
+      <Nav variant="tabs">
         <Nav.Item>
           <Nav.Link eventKey="first">Tab 1</Nav.Link>
         </Nav.Item>
@@ -9,11 +9,11 @@
           <Nav.Link eventKey="second">Tab 2</Nav.Link>
         </Nav.Item>
         <NavDropdown eventKey="3" title="Dropdown" id="nav-dropdown-within-tab">
-          <MenuItem eventKey="3.1">Action</MenuItem>
-          <MenuItem eventKey="3.2">Another action</MenuItem>
-          <MenuItem eventKey="3.3">Something else here</MenuItem>
-          <MenuItem divider />
-          <MenuItem eventKey="3.4">Separated link</MenuItem>
+          <Dropdown.Item eventKey="3.1">Action</Dropdown.Item>
+          <Dropdown.Item eventKey="3.2">Another action</Dropdown.Item>
+          <Dropdown.Item eventKey="3.3">Something else here</Dropdown.Item>
+          <Dropdown.Item divider />
+          <Dropdown.Item eventKey="3.4">Separated link</Dropdown.Item>
         </NavDropdown>
       </Nav>
     </Col>

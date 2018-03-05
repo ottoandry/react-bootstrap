@@ -22,7 +22,7 @@ export default class Playground extends React.Component {
   };
 
   render() {
-    const { codeText } = this.props;
+    const { codeText, exampleClassName } = this.props;
 
     return (
       <LiveProvider
@@ -31,7 +31,7 @@ export default class Playground extends React.Component {
         mountStylesheet={false}
         noInline={codeText.includes('render(')}
       >
-        <div className={classNames('bs-example', this.props.exampleClassName)}>
+        <div className={classNames('bs-example', exampleClassName)}>
           <LivePreview />
           <LiveError />
         </div>

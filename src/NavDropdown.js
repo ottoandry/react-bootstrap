@@ -2,9 +2,11 @@ import classNames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Dropdown from './Dropdown';
+import Dropdown from './Dropdown2';
+import NavItem from './NavItem';
+import NavLink from './NavLink';
 import splitComponentProps from './utils/splitComponentProps';
-import ValidComponentChildren from './utils/ValidComponentChildren';
+// import ValidComponentChildren from './utils/ValidComponentChildren';
 
 const propTypes = {
   ...Dropdown.propTypes,
@@ -24,66 +26,55 @@ const propTypes = {
 };
 
 class NavDropdown extends React.Component {
-  isActive({ props }, activeKey, activeHref) {
-    if (
-      props.active ||
-      (activeKey != null && props.eventKey === activeKey) ||
-      (activeHref && props.href === activeHref)
-    ) {
-      return true;
-    }
+  // isActive({ props }, activeKey, activeHref) {
+  //   if (
+  //     props.active ||
+  //     (activeKey != null && props.eventKey === activeKey) ||
+  //     (activeHref && props.href === activeHref)
+  //   ) {
+  //     return true;
+  //   }
 
-    if (
-      ValidComponentChildren.some(props.children, child =>
-        this.isActive(child, activeKey, activeHref)
-      )
-    ) {
-      return true;
-    }
+  //   if (
+  //     ValidComponentChildren.some(props.children, child =>
+  //       this.isActive(child, activeKey, activeHref)
+  //     )
+  //   ) {
+  //     return true;
+  //   }
 
-    return props.active;
-  }
+  //   return props.active;
+  // }
 
   render() {
     const {
       title,
       activeKey,
-      activeHref,
       className,
       style,
       children,
+      eventKey: _,
       ...props
     } = this.props;
 
-    const active = this.isActive(this, activeKey, activeHref);
-    delete props.active; // Accessed via this.isActive().
-    delete props.eventKey; // Accessed via this.isActive().
-
-    const [dropdownProps, toggleProps] = splitComponentProps(
-      props,
-      Dropdown.ControlledComponent
-    );
-
-    // Unlike for the other dropdowns, styling needs to go to the `<Dropdown>`
-    // rather than the `<Dropdown.Toggle>`.
-
     return (
       <Dropdown
-        {...dropdownProps}
-        componentClass="li"
-        className={classNames(className, { active })}
+        {...props}
+        componentClass={NavItem}
+        className={classNames(className, { active: false })}
         style={style}
       >
-        <Dropdown.Toggle {...toggleProps} useAnchor>
+        <Dropdown.Toggle eventKey={null} componentClass={NavLink}>
           {title}
         </Dropdown.Toggle>
 
         <Dropdown.Menu>
-          {ValidComponentChildren.map(children, child =>
+          {children}
+          {/* {ValidComponentChildren.map(children, child =>
             React.cloneElement(child, {
               active: this.isActive(child, activeKey, activeHref)
             })
-          )}
+          )} */}
         </Dropdown.Menu>
       </Dropdown>
     );
@@ -91,5 +82,6 @@ class NavDropdown extends React.Component {
 }
 
 NavDropdown.propTypes = propTypes;
+NavDropdown.Item = Dropdown.Item;
 
 export default NavDropdown;

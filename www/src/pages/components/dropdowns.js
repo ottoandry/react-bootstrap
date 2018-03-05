@@ -5,15 +5,14 @@ import LinkToSource from '../../components/LinkToSource';
 import PropTable from '../../components/PropTable';
 import ReactPlayground from '../../components/ReactPlayground';
 
-import DropdownButtonBasic from '../../examples/DropdownButtonBasic';
-import SplitButtonBasic from '../../examples/SplitButtonBasic';
-import DropdownButtonSizes from '../../examples/DropdownButtonSizes';
-import DropdownButtonNoCaret from '../../examples/DropdownButtonNoCaret';
-import SplitButtonDropup from '../../examples/SplitButtonDropup';
-import SplitButtonRight from '../../examples/SplitButtonRight';
-import DropdownButtonCustom from '../../examples/DropdownButtonCustom';
-import DropdownButtonCustomMenu from '../../examples/DropdownButtonCustomMenu';
-import MenuItem from '../../examples/MenuItem';
+import DropdownButtonBasic from '../../examples/Dropdown/ButtonBasic';
+import SplitButtonBasic from '../../examples/Dropdown/SplitButtonBasic';
+import DropdownButtonSizes from '../../examples/Dropdown/ButtonSizes';
+import DropdownButtonNoCaret from '../../examples/Dropdown/ButtonNoCaret';
+import DropDirections from '../../examples/Dropdown/DropDirections';
+import DropdownButtonCustom from '../../examples/Dropdown/ButtonCustom';
+import DropdownButtonCustomMenu from '../../examples/Dropdown/ButtonCustomMenu';
+import DropdownItem from '../../examples/Dropdown/DropdownItem';
 
 export default function DropdownSection({ data }) {
   return (
@@ -48,33 +47,16 @@ export default function DropdownSection({ data }) {
       <ReactPlayground codeText={DropdownButtonSizes} />
 
       <h3>
-        <Anchor id="btn-dropdowns-nocaret">No caret variation</Anchor>
-      </h3>
-      <p>
-        Remove the caret using the <code>noCaret</code> prop.
-      </p>
-      <ReactPlayground codeText={DropdownButtonNoCaret} />
-
-      <h3>
-        <Anchor id="btn-dropdowns-dropup">Dropup variation</Anchor>
-      </h3>
-      <p>
-        Trigger dropdown menus that site above the button by adding the{' '}
-        <code>dropup</code> prop.
-      </p>
-      <ReactPlayground codeText={SplitButtonDropup} />
-
-      <h3>
-        <Anchor id="btn-dropdowns-right">Dropdown right variation</Anchor>
+        <Anchor id="btn-dropdowns-right">Dropdown directions</Anchor>
       </h3>
       <p>
         Trigger dropdown menus that align to the right of the button using the{' '}
         <code>pullRight</code> prop.
       </p>
-      <ReactPlayground codeText={SplitButtonRight} />
+      <ReactPlayground codeText={DropDirections} />
 
       <h2 className="page-header">
-        <Anchor id="menu-items">Menu items</Anchor> <small>MenuItem</small>
+        <Anchor id="menu-items">Menu items</Anchor> <small>DropdownItem</small>
       </h2>
 
       <p>This component represents a menu item in a dropdown.</p>
@@ -83,7 +65,8 @@ export default function DropdownSection({ data }) {
         <code>target</code>, <code>title</code>.
       </p>
       <p>
-        It also supports different properties of the normal Bootstrap MenuItem.
+        It also supports different properties of the normal Bootstrap
+        DropdownItem.
       </p>
       <ul>
         <li>
@@ -108,7 +91,10 @@ export default function DropdownSection({ data }) {
         The callback is called with the following arguments:{' '}
         <code>eventKey</code> and <code>event</code>
       </p>
-      <ReactPlayground codeText={MenuItem} />
+      <ReactPlayground
+        codeText={DropdownItem}
+        exampleClassName="bs-example__dropdown-menu"
+      />
 
       <h3>
         <Anchor id="btn-dropdowns-custom">Dropdown Customization</Anchor>
@@ -190,9 +176,9 @@ export default function DropdownSection({ data }) {
 
       <h4>
         <Anchor id="menu-item-props">Menu Item</Anchor>
-        <LinkToSource component={data.MenuItem.displayName} />
+        <LinkToSource component={data.DropdownItem.displayName} />
       </h4>
-      <PropTable metadata={data.MenuItem} />
+      <PropTable metadata={data.DropdownItem} />
     </div>
   );
 }
@@ -211,7 +197,7 @@ export const query = graphql`
       displayName
       ...PropTable_metadata
     }
-    MenuItem: componentMetadata(displayName: { eq: "MenuItem" }) {
+    DropdownItem: componentMetadata(displayName: { eq: "DropdownItem" }) {
       displayName
       ...PropTable_metadata
     }

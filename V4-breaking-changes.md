@@ -34,3 +34,10 @@
 ### NavLink
 
 * add
+
+## Dropdown
+
+* remvoed the `disabled` prop on Dropdown, pass it directly to Dropdown.Toggle
+* Removed bsRole, use function children to render custom Toggles or Menus
+* removed SplitButton.toggle
+* `noCaret` is removed because it's not optional with the styles anymore

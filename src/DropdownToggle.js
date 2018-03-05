@@ -4,54 +4,57 @@ import classNames from 'classnames';
 import Button from './Button';
 import SafeAnchor from './SafeAnchor';
 
-import { bsClass as setBsClass } from './utils/bootstrapUtils';
-
-const propTypes = {
-  open: PropTypes.bool,
-  title: PropTypes.string,
-  useAnchor: PropTypes.bool
-};
-
-const defaultProps = {
-  open: false,
-  useAnchor: false,
-  bsRole: 'toggle'
-};
+import { createBootstrapComponent } from './ThemeProvider';
 
 class DropdownToggle extends React.Component {
+  static ROLE = 'toggle';
+  static propTypes = {
+    /**
+     * @default 'dropdown-toggle'
+     */
+    bsPrefix: PropTypes.string,
+    bsRole: PropTypes.string,
+    title: PropTypes.string,
+
+    split: PropTypes.bool,
+    useAnchor: PropTypes.bool
+  };
+
+  static defaultProps = {
+    useAnchor: false,
+    bsRole: DropdownToggle.ROLE
+  };
+
   render() {
     const {
-      open,
+      bsRole: _,
+      bsPrefix,
+      split,
       useAnchor,
-      bsClass,
       className,
       children,
       ...props
     } = this.props;
 
-    delete props.bsRole;
-
     const Component = useAnchor ? SafeAnchor : Button;
 
     // This intentionally forwards bsSize and bsStyle (if set) to the
     // underlying component, to allow it to render size and style variants.
-
-    // FIXME: Should this really fall back to `title` as children?
     return (
       <Component
         {...props}
         role="button"
-        className={classNames(className, bsClass)}
         aria-haspopup
-        aria-expanded={open}
+        className={classNames(
+          className,
+          bsPrefix,
+          split && `${bsPrefix}-split`
+        )}
       >
-        {children || props.title}
+        {children}
       </Component>
     );
   }
 }
 
-DropdownToggle.propTypes = propTypes;
-DropdownToggle.defaultProps = defaultProps;
-
-export default setBsClass('dropdown-toggle', DropdownToggle);
+export default createBootstrapComponent(DropdownToggle, 'dropdown-toggle');

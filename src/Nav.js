@@ -9,8 +9,10 @@ import uncontrollable from 'uncontrollable';
 import { createBootstrapComponent } from './ThemeProvider';
 import TabContext from './TabContext';
 import mapContextToProps from './utils/mapContextToProps';
+import chain from './utils/createChainedFunction';
 import NavContext from './NavContext';
 import NavbarContext from './NavbarContext';
+import SelectableContext from './SelectableContext';
 import NavItem from './NavItem';
 import NavLink from './NavLink';
 
@@ -162,7 +164,11 @@ class Nav extends React.Component {
     onSelect(nextActiveChild.dataset.rbEventKey);
     this._needsRefocus = true;
   };
-
+  handleSelect = (key, event) => {
+    const { onSelect } = this.props;
+    if (key == null || !onSelect) return;
+    onSelect(key, event);
+  };
   attachRef = ref => {
     this.listNode = ref;
   };
@@ -177,12 +183,12 @@ class Nav extends React.Component {
       navbar,
       className,
       children,
+      onSelect: _,
       componentClass: Component,
       ...props
     } = this.props;
 
     delete props.activeKey;
-    delete props.onSelect;
     delete props.getControlledId;
     delete props.getControllerId;
 
@@ -192,23 +198,28 @@ class Nav extends React.Component {
 
     return (
       <NavContext.Provider value={this.state.navContext}>
-        <Component
-          {...props}
-          ref={this.attachRef}
-          className={classNames(className, {
-            [bsPrefix]: !navbar,
-            [`${navbarBsPrefix}-nav`]: navbar,
-            [`${bsPrefix}-${variant}`]: !!variant,
-            [`${bsPrefix}-fill`]: fill,
-            [`${bsPrefix}-justified`]: justify
-          })}
-        >
-          {children}
-        </Component>
+        <SelectableContext.Provider value={this.handleSelect}>
+          <Component
+            {...props}
+            ref={this.attachRef}
+            className={classNames(className, {
+              [bsPrefix]: !navbar,
+              [`${navbarBsPrefix}-nav`]: navbar,
+              [`${bsPrefix}-${variant}`]: !!variant,
+              [`${bsPrefix}-fill`]: fill,
+              [`${bsPrefix}-justified`]: justify
+            })}
+          >
+            {children}
+          </Component>
+        </SelectableContext.Provider>
       </NavContext.Provider>
     );
   }
-}
+);
+
+DecoratedNav.Item = NavItem;
+DecoratedNav.Link = NavLink;
 
 const UncontrolledNav = uncontrollable(createBootstrapComponent(Nav, 'nav'), {
   activeKey: 'onSelect'
@@ -216,27 +227,29 @@ const UncontrolledNav = uncontrollable(createBootstrapComponent(Nav, 'nav'), {
 
 const DecoratedNav = mapContextToProps(
   UncontrolledNav,
-  [TabContext.Consumer, NavbarContext.Consumer],
-  (tabContext, navbarContext, { role, navbar }) => {
-    if (!tabContext && !navbarContext) return null;
+  [SelectableContext.Consumer, TabContext.Consumer, NavbarContext.Consumer],
+  (
+    onSelect,
+    tabContext,
+    navbarContext,
+    { role, navbar, onSelect: propsOnSelect }
+  ) => {
+    onSelect = chain(propsOnSelect, onSelect);
+    if (!tabContext && !navbarContext) return { onSelect };
 
     if (navbarContext)
       return {
-        onSelect: navbarContext.onSelect,
+        onSelect,
         navbarBsPrefix: navbarContext.bsPrefix,
         navbar: navbar == null ? true : navbar
       };
 
-    const {
-      activeKey,
-      onSelect,
-      getControllerId,
-      getControlledId
-    } = tabContext;
-
+    const { activeKey, getControllerId, getControlledId } = tabContext;
     return {
       activeKey,
       onSelect,
+      // pass these two through to avoid having to listen to
+      // both Tab and Nav contexts in NavLink
       getControllerId,
       getControlledId,
       role: role || 'tablist'
