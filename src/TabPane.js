@@ -3,10 +3,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import elementType from 'prop-types-extra/lib/elementType';
 
-import mapContextToProps, { makeEventKey } from './utils/mapContextToProps';
+import mapContextToProps from './utils/mapContextToProps';
 import { createBootstrapComponent } from './ThemeProvider';
 import TabContext from './TabContext';
-import SelectableContext from './SelectableContext';
+import SelectableContext, { makeEventKey } from './SelectableContext';
 
 import Fade from './Fade';
 
@@ -81,10 +81,10 @@ class TabPane extends React.Component {
      */
     unmountOnExit: PropTypes.bool,
 
-    /** @private * */
+    /** @ignore * */
     id: PropTypes.string,
 
-    /** @private * */
+    /** @ignore * */
     'aria-labelledby': PropTypes.string
   };
 

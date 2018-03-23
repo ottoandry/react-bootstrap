@@ -19,17 +19,19 @@ export default function NavSection({ data }) {
   return (
     <div className="bs-docs-section">
       <h2 className="page-header">
-        <Anchor id="navs">Base Nav</Anchor>{' '}
-        <small>Nav, Nav.Item, Nav.Link</small>
+        <Anchor id="navs">Base Nav</Anchor>
       </h2>
 
       <p>
-        Navs come in two styles, <code>pills</code> and <code>tabs</code>.
-        Disable a tab by adding <code>disabled</code>.
+        Navigation bits in Bootstrap all share a general <code>Nav</code>{' '}
+        component and styles. Swap <code>variant</code>s to switch between each
+        style. The base <code>Nav</code> component is built with flexbox and
+        provide a strong foundation for building all types of navigation
+        components.
       </p>
       <Callout theme="info">
-        The base <code>.nav</code> component does not include any{' '}
-        <code>.active</code> styling!
+        The basic, variant-less, <code>Nav</code> component does not include any{' '}
+        <code>active</code> prop styling!
       </Callout>
       <ReactPlayground codeText={NavBasic} />
       <h3>

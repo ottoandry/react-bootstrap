@@ -3,8 +3,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import * as ReactBootstrap from 'react-bootstrap';
-
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
+
+import Sonnet from './Sonnet';
 
 import '../css/prism.css';
 
@@ -13,6 +14,7 @@ const scope = {
   ReactDOM,
   classNames,
   PropTypes,
+  Sonnet,
   bootstrapUtils: ReactBootstrap.utils.bootstrapUtils
 };
 

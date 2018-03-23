@@ -28,13 +28,26 @@
     "build-storybook": "build-storybook"
   },
   "lint-staged": {
-    "*.js": ["npm run ci-lint -- --fix", "git add"]
+    "*.js": [
+      "npm run ci-lint -- --fix",
+      "git add"
+    ]
   },
   "prettier": {
     "singleQuote": true
   },
-  "files": ["CHANGELOG.md", "lib", "dist", "es"],
-  "keywords": ["react", "ecosystem-react", "react-component", "bootstrap"],
+  "files": [
+    "CHANGELOG.md",
+    "lib",
+    "dist",
+    "es"
+  ],
+  "keywords": [
+    "react",
+    "ecosystem-react",
+    "react-component",
+    "bootstrap"
+  ],
   "author": "Stephen J. Collings <stevoland@gmail.com>",
   "license": "MIT",
   "peerDependencies": {

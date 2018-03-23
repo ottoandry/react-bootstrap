@@ -216,10 +216,7 @@ class Nav extends React.Component {
       </NavContext.Provider>
     );
   }
-);
-
-DecoratedNav.Item = NavItem;
-DecoratedNav.Link = NavLink;
+}
 
 const UncontrolledNav = uncontrollable(createBootstrapComponent(Nav, 'nav'), {
   activeKey: 'onSelect'

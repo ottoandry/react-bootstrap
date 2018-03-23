@@ -1,80 +1,59 @@
-import classNames from 'classnames';
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Dropdown from './Dropdown2';
+import Dropdown from './Dropdown';
 import NavItem from './NavItem';
 import NavLink from './NavLink';
-import splitComponentProps from './utils/splitComponentProps';
-// import ValidComponentChildren from './utils/ValidComponentChildren';
 
 const propTypes = {
-  ...Dropdown.propTypes,
+  /** An `onClick` handler passed to the Toggle component */
+  onClick: PropTypes.func,
 
-  // Toggle props.
+  /** The content of the non-toggle Button.  */
   title: PropTypes.node.isRequired,
-  noCaret: PropTypes.bool,
-  active: PropTypes.bool,
-  activeKey: PropTypes.any,
-  activeHref: PropTypes.string,
 
-  // Override generated docs from <Dropdown>.
+  /** Disables both Buttons  */
+  disabled: PropTypes.bool,
+
+  /** An ARIA accessible role applied to the Menu component. When set to 'menu', The dropdown */
+  menuRole: PropTypes.string,
+
   /**
-   * @private
+   *  Which event when fired outside the component will cause it to be closed.
+   *
+   * _see [DropdownMenu](#menu-props) for more details_
    */
-  children: PropTypes.node
+  rootCloseEvent: PropTypes.string,
+
+  /** @ignore */
+  bsPrefix: PropTypes.string
 };
 
 class NavDropdown extends React.Component {
-  // isActive({ props }, activeKey, activeHref) {
-  //   if (
-  //     props.active ||
-  //     (activeKey != null && props.eventKey === activeKey) ||
-  //     (activeHref && props.href === activeHref)
-  //   ) {
-  //     return true;
-  //   }
-
-  //   if (
-  //     ValidComponentChildren.some(props.children, child =>
-  //       this.isActive(child, activeKey, activeHref)
-  //     )
-  //   ) {
-  //     return true;
-  //   }
-
-  //   return props.active;
-  // }
-
   render() {
     const {
       title,
-      activeKey,
-      className,
-      style,
       children,
-      eventKey: _,
+      bsPrefix,
+      rootCloseEvent,
+      menuRole,
+      disabled,
       ...props
     } = this.props;
 
     return (
-      <Dropdown
-        {...props}
-        componentClass={NavItem}
-        className={classNames(className, { active: false })}
-        style={style}
-      >
-        <Dropdown.Toggle eventKey={null} componentClass={NavLink}>
+      <Dropdown {...props} componentClass={NavItem}>
+        <Dropdown.Toggle
+          eventKey={null}
+          disabled={disabled}
+          childBsPrefix={bsPrefix}
+          componentClass={NavLink}
+        >
           {title}
         </Dropdown.Toggle>
 
-        <Dropdown.Menu>
+        <Dropdown.Menu role={menuRole} rootCloseEvent={rootCloseEvent}>
           {children}
-          {/* {ValidComponentChildren.map(children, child =>
-            React.cloneElement(child, {
-              active: this.isActive(child, activeKey, activeHref)
-            })
-          )} */}
         </Dropdown.Menu>
       </Dropdown>
     );

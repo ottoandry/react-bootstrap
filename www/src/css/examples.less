@@ -3,6 +3,12 @@
 }
 
 .bs-example {
+  & .react-live-preview::after {
+    display: block;
+    clear: both;
+    content: '';
+  }
+
   .btn-toolbar + .btn-toolbar {
     margin-top: 10px;
   }

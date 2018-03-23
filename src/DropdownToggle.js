@@ -1,58 +1,67 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import Button from './Button';
-import SafeAnchor from './SafeAnchor';
+import PropTypes from 'prop-types';
+import elementType from 'prop-types-extra/lib/elementType';
+import React from 'react';
 
+import Button from './Button';
 import { createBootstrapComponent } from './ThemeProvider';
+import DropdownContext from './DropdownContext';
 
 class DropdownToggle extends React.Component {
-  static ROLE = 'toggle';
   static propTypes = {
     /**
      * @default 'dropdown-toggle'
      */
     bsPrefix: PropTypes.string,
-    bsRole: PropTypes.string,
     title: PropTypes.string,
 
     split: PropTypes.bool,
-    useAnchor: PropTypes.bool
+    componentClass: elementType,
+
+    /**
+     * to passthrough to the underlying button or whatever from DropdownButton
+     * @private
+     */
+    childBsPrefix: PropTypes.string
   };
 
   static defaultProps = {
-    useAnchor: false,
-    bsRole: DropdownToggle.ROLE
+    componentClass: Button
   };
 
   render() {
     const {
-      bsRole: _,
       bsPrefix,
       split,
-      useAnchor,
       className,
       children,
+      childBsPrefix,
+      componentClass: Component,
       ...props
     } = this.props;
-
-    const Component = useAnchor ? SafeAnchor : Button;
 
     // This intentionally forwards bsSize and bsStyle (if set) to the
     // underlying component, to allow it to render size and style variants.
     return (
-      <Component
-        {...props}
-        role="button"
-        aria-haspopup
-        className={classNames(
-          className,
-          bsPrefix,
-          split && `${bsPrefix}-split`
+      <DropdownContext.Consumer>
+        {({ toggleId, setToggleElement, onToggle }) => (
+          <Component
+            aria-haspopup
+            id={toggleId}
+            bsPrefix={childBsPrefix}
+            onClick={onToggle}
+            ref={setToggleElement}
+            className={classNames(
+              className,
+              bsPrefix,
+              split && `${bsPrefix}-split`
+            )}
+            {...props}
+          >
+            {children}
+          </Component>
         )}
-      >
-        {children}
-      </Component>
+      </DropdownContext.Consumer>
     );
   }
 }
